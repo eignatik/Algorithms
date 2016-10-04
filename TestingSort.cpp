@@ -31,6 +31,8 @@ void TestingSort::addRandomValuesToVector(vector<int>* vectorSource){
  */
 void TestingSort::sortVector(vector<int>* vectorSource){
     long size = (*vectorSource).size();
+    unsigned int startTime = clock();
+
     for(int i=0; i<size; i++){
         for(int j=0; j<size-i; j++){
             if((*vectorSource)[j]>(*vectorSource)[j+1]){
@@ -40,6 +42,9 @@ void TestingSort::sortVector(vector<int>* vectorSource){
             }
         }
     }
+    getRuntimeInterval(startTime, clock());
+    cout << "for sorting with operator[]" << endl;
+
 }
 
 /**
@@ -48,6 +53,8 @@ void TestingSort::sortVector(vector<int>* vectorSource){
  */
 void TestingSort::sortVectorWithAt(vector<int>* vectorSource){
     long size = (*vectorSource).size();
+    unsigned int startTime = clock();
+
     for(int i=0; i<size; i++){
         for(int j=0; j<size-i-1; j++){
             if((*vectorSource).at(j)>(*vectorSource).at(j+1)){
@@ -57,4 +64,10 @@ void TestingSort::sortVectorWithAt(vector<int>* vectorSource){
             }
         }
     }
+    getRuntimeInterval(startTime, clock());
+    cout << "for sorting with at()" << endl;
+}
+
+void TestingSort::getRuntimeInterval(int startTime, int endTime) {
+    cout << "Sorting took [" << (float)(endTime-startTime)/CLOCKS_PER_SEC << " s] ";
 }
