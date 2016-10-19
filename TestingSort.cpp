@@ -1,11 +1,26 @@
 #include "TestingSort.h"
 #include <fstream>
+#include <ctime>
+#include <cstdlib>
+#include <conio.h>
 
 /**
  * print vector to console
  * @param vectorSource pointer on vector
  */
 void TestingSort::printVector(vector<int>* vectorSource){
+    long size = (*vectorSource).size();
+    for(int i=0; i<size; i++){
+        cout << (*vectorSource)[i] << ' ';
+    }
+    cout << "\n" << endl;
+}
+
+/**
+ * overload printing
+ * @param vectorSource
+ */
+void TestingSort::printVector(vector<double>* vectorSource){
     long size = (*vectorSource).size();
     for(int i=0; i<size; i++){
         cout << (*vectorSource)[i] << ' ';
@@ -45,7 +60,28 @@ void TestingSort::sortVector(vector<int>* vectorSource){
     }
     getRuntimeInterval(startTime, clock());
     cout << "for sorting with operator[]" << endl;
+}
 
+/**
+ * overloaded sortVector by bubble sort for double type
+ * @param vectorSource
+ */
+void TestingSort::sortVector(vector<double>* vectorSource){
+    long size = (*vectorSource).size();
+    unsigned int startTime = clock();
+
+    for(int i=0; i<size; i++){
+        for(int j=0; j<size-i; j++){
+            if((*vectorSource)[j]>(*vectorSource)[j+1]){
+                (*vectorSource)[j] += (*vectorSource)[j+1];
+                (*vectorSource)[j+1] = (*vectorSource)[j] - (*vectorSource)[j+1];
+                (*vectorSource)[j] -= (*vectorSource)[j+1];
+            }
+        }
+    }
+    unsigned int endTime = clock() + 1;
+    getRuntimeInterval(startTime, endTime);
+    cout << "for sorting with operator[]" << endl;
 }
 
 /**
@@ -95,12 +131,8 @@ void TestingSort::getUserVector(vector<int> *vectorSource) {
     vector<int> tempArray;
     cout << "Enter numbers (use 0 to finish): \n";
     int number = -1;
-    while (1) {
-        cin >> number;
+    while ((cin >> number) && number != 0) {
         tempArray.push_back(number);
-        if (number == 0) {
-            break;
-        }
     }
     int lastNum = tempArray.back();
     for (vector<int>::iterator it1 = tempArray.begin(); it1 < tempArray.end();) {
@@ -116,6 +148,7 @@ void TestingSort::getUserVector(vector<int> *vectorSource) {
             if (curr % 3 == 0) {
                 for (int j = 0; j < 3; j++)
                     it1 = tempArray.insert(it1 + 1, 1);
+                //TODO make in one line, without loops
             } else {
                 it1++;
             }
@@ -128,7 +161,7 @@ void TestingSort::getUserVector(vector<int> *vectorSource) {
 void TestingSort::readFromFile() {
     int i = 0;
     char fileString[1000];
-    ifstream file("/home/eignatik/Clion/Algorithms/vector.txt");
+    ifstream file("C:\\Users\\Elena\\ClionProjects\\OOP\\Eugen\\Algorithms\\vector.txt");
     if (file.is_open()) {
         char ch;
         while (file.get(ch)) {
@@ -143,6 +176,13 @@ void TestingSort::readFromFile() {
     } else
         cout << "No such file!";
     cout << std::endl;
+}
+
+void TestingSort::fillRandom(vector<double>* vectorSource) {
+    int size = (*vectorSource).size();
+    for (int i = 0; i < size; i++){
+        (*vectorSource)[i] = double((-100 + rand() % 201) / 100.0);
+    }
 }
 
 void TestingSort::getRuntimeInterval(int startTime, int endTime) {
