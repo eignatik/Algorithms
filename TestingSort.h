@@ -10,5 +10,8 @@ public:
     void addRandomValuesToVector(vector<int>* vectorSource);
     void sortVector(vector<int>* vectorSource);
     void sortVectorWithAt(vector<int>* vectorSource);
+    void sortWithIterators(vector<int>* vectorSource);
+    void getUserVector(vector<int>* vectorSource);
+    void readFromFile();
 };
 
